@@ -1,6 +1,8 @@
 package 큐;
 
 /*
+https://www.acmicpc.net/problem/16926
+
 [아이디어]
 요세푸스 문제랑 비슷하다.
 껍질 부분 큐에 넣고 R번 넣고빼기 한다.
@@ -51,8 +53,56 @@ public class BOJ_16926_배열_돌리기_1 {
 		}
 		
 		//solve
-		solve(0);
+		int colSize = n;
+		int rowSize = m;
+		int gap = 0;
+		Queue<Integer> q = new ArrayDeque<>();
+		while (Math.min(colSize, rowSize) > 0) {
+
+			int c = gap;
+			int r = gap;
+			for(int i = 0; i < rowSize-1; i++) {
+				q.offer(arr[c][r+i]);
+			}
+			
+			for(int i = 0; i < colSize-1; i++) {
+				q.offer(arr[c+i][r+rowSize-1]);
+			}
+			
+			for(int i = 0; i < rowSize-1; i++) {
+				q.offer(arr[c+colSize-1][r+rowSize-1-i]);
+			}
+			
+			for(int i = 0; i < colSize-1; i++) {
+				q.offer(arr[c+colSize-1-i][r]);
+			}
+
+			for(int i = 0; i < R; i++) {
+				q.offer(q.poll());
+			}
+			
+			for(int i = 0; i < rowSize-1; i++) {
+				arr[c][r+i] = q.poll();
+			}
+			
+			for(int i = 0; i < colSize-1; i++) {
+				arr[c+i][r+rowSize-1] = q.poll();
+			}
+			
+			for(int i = 0; i < rowSize-1; i++) {
+				arr[c+colSize-1][r+rowSize-1-i] = q.poll();
+			}
+			
+			for(int i = 0; i < colSize-1; i++) {
+				arr[c+colSize-1-i][r] = q.poll();
+			}
+			
+			gap++;
+			colSize = n - gap*2;
+			rowSize = m - gap*2;
+		}
 		
+		// print
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				sb.append(arr[i][j]);
@@ -63,65 +113,4 @@ public class BOJ_16926_배열_돌리기_1 {
 		
 		System.out.println(sb);
 	}
-	static void solve(int gap) {
-		int colSize = n - gap*2;
-		int rowSize = m - gap*2;
-		if (colSize<= 0 || rowSize <= 0) {
-			return;
-		}
-		
-		if (colSize == 1 && rowSize == 1) {
-			return;
-		}
-		
-		Queue<Integer> q = new ArrayDeque<>();
-		
-		int c = gap;
-		int r = gap;
-		for(int i = 0; i < rowSize-1; i++) {
-			q.offer(arr[c][r+i]);
-		}
-		
-		for(int i = 0; i < colSize-1; i++) {
-			q.offer(arr[c+i][r+rowSize-1]);
-		}
-		
-		for(int i = 0; i < rowSize-1; i++) {
-			q.offer(arr[c+colSize-1][r+rowSize-1-i]);
-		}
-		
-		for(int i = 0; i < colSize-1; i++) {
-			q.offer(arr[c+colSize-1-i][r]);
-		}
-
-		for(int i = 0; i < R; i++) {
-			q.offer(q.poll());
-		}
-		
-//		System.out.println(q.size());
-//		
-//		while(!q.isEmpty()) {
-//			System.out.println(q.poll());
-//		}
-
-		for(int i = 0; i < rowSize-1; i++) {
-			arr[c][r+i] = q.poll();
-		}
-		
-		for(int i = 0; i < colSize-1; i++) {
-			arr[c+i][r+rowSize-1] = q.poll();
-		}
-		
-		for(int i = 0; i < rowSize-1; i++) {
-			arr[c+colSize-1][r+rowSize-1-i] = q.poll();
-		}
-		
-		for(int i = 0; i < colSize-1; i++) {
-			arr[c+colSize-1-i][r] = q.poll();
-		}
-		
-		solve(gap+1);
-		
-	}
-	
 }
