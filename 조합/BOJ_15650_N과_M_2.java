@@ -1,4 +1,4 @@
-package 재귀.조합;
+package 조합;
 
 import java.io.BufferedReader;
 import java.io.IOException;

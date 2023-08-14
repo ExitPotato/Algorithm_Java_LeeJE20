@@ -1,4 +1,4 @@
-package 재귀.순열;
+package 순열;
 
 /*
 [링크]
