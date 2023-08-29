@@ -1,11 +1,14 @@
 package base;
+
 /*
 [링크]
+
 
 [시간]
 
 
 [아이디어]
+
 
 [시간복잡도]
 
@@ -29,16 +32,16 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
-		
+
 		int K, N, M;
 		int[][] arr;
 		K = Integer.parseInt(br.readLine());
-		
+
 		st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		arr = new int[N][M];
-		
+
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < M; j++) {
