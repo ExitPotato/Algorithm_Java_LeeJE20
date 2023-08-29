@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main_1697_숨바꼭질 {
+public class BOJ_1697_숨바꼭질 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
