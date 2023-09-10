@@ -27,7 +27,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
 public class BOJ_1753_최단경로 {
 	

@@ -29,8 +29,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-import com.sun.org.apache.xerces.internal.impl.dv.dtd.NOTATIONDatatypeValidator;
-
 public class SWEA_1238_Contact {
 	static int T, N, M;
 	static int[][] graph;
