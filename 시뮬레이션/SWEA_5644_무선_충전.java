@@ -185,9 +185,9 @@ public class SWEA_5644_무선_충전 {
 	
 	
 	private static void getBC(int AY, int AX, int BY, int BX) {
-		int APower = 0;
-		int BPower = 0;
-		
+//		int APower = 0;
+//		int BPower = 0;
+//		
 		
 		int ABc = -1;
 		int BBc = -1;
