@@ -11,7 +11,8 @@ https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWX
 한 노드 기준으로 진입 기준으로 dfs, 진출 기준으로 dfs해서 모든 노드 훑을 수 있으면 ok
 
 다른 아이디어
-위상정렬했을때 위치가 고정되는 노드의 수
+위상정렬했을때 위치가 고정되는 노드의 수를 찾는다
+-> 근데 방법 검색해봐도 잘 안 나옴. 완전탐색으로 하는건 별로일 것 같다...
 https://dev.gmarket.com/21
 
 
@@ -44,10 +45,10 @@ public class Solution_5643_키_순서 {
 	private static class Node{
 		int vertex;
 		Node next;
-		Node parent;
 	}
 	static int T, N, M;
-	static int[][] arr;
+	static Node[][] rightGraph;
+	static Node[][] leftGraph;
 	static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws Exception {
 		String input = "\n" +
