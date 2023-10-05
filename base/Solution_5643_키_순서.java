@@ -72,7 +72,7 @@ public class Solution_5643_키_순서 {
 			st = new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
-			arr = new int[N][M];
+			int[][] arr = new int[N][M];
 			for (int i = 0; i < M; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j <	M; j++) {
