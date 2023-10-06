@@ -1,4 +1,4 @@
-package base;
+package 시뮬레이션;
 
 /*
 [링크]
@@ -16,7 +16,8 @@ dfs다 우와~
 
 
 [실수]
-
+map을 copy하는 것을 까먹었다..
+-> map을 copy하는 경우 어디를 copy하는지 더 신경쓰자
 
 [검색]
 
@@ -28,27 +29,14 @@ dfs다 우와~
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Solution_5656_벽돌_깨기 {
 
 	static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws Exception {
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String input = "1\n" +
-				"1 8 9\n" +
-				"0 0 0 0 0 0 0 0 \n" +
-				"0 0 0 1 0 0 0 0\n" +
-				"0 0 0 1 0 0 0 0\n" +
-				"0 0 0 1 0 0 0 0\n" +
-				"0 1 0 1 0 0 0 0\n" +
-				"0 1 0 1 0 0 0 1\n" +
-				"4 1 0 9 1 1 0 1\n" +
-				"1 1 1 1 1 1 1 1\n" +
-				"1 1 1 1 1 1 1 1";
-		BufferedReader br = new BufferedReader(new StringReader(input));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		StringTokenizer st;
 		int T, N, W, H;
 		int[][] map;
@@ -73,6 +61,8 @@ public class Solution_5656_벽돌_깨기 {
 			int minBrickCount = Integer.MAX_VALUE;
 
 			minBrickCount = backTracking(N, W, H, map);
+
+			sb.append(minBrickCount).append("\n");
 		}
 		System.out.println(sb);
 	}
@@ -81,7 +71,7 @@ public class Solution_5656_벽돌_깨기 {
 		if (N <= 0){
 			return countLeftBricks(W, H, map);
 		}
-		int result = 0;
+		int result = Integer.MAX_VALUE;
 		int[][] copyMap = new int[H][W];
 
 		for (int i = 0; i < W; i++) {
@@ -105,7 +95,6 @@ public class Solution_5656_벽돌_깨기 {
 	}
 
 	private static void shoot(int column, int n, int w, int h, int[][] map) {
-
 		int row = -1;
 		for (int r = 0; r < h; r++) {
 			if (map[r][column]!=0){
@@ -125,22 +114,32 @@ public class Solution_5656_벽돌_깨기 {
 		int[][] removedMap = new int[h][w];
 		copyArray(map, removedMap);
 
-		System.out.println("\n\nshoot: "+row+", "+column);
 		// 벽돌 없애기
 		checkBricksToBeRemoved(map, removedMap, row, column, h, w, dy, dx);
 
 		// 벽돌 아래로 떨어뜨리기
 		dropBricks(removedMap, h, w);
 
+		copyArray(removedMap, map);
 	}
 
 	private static void dropBricks(int[][] map, int h, int w) {
-		for (int i = h-1; i >= 0; i--) {
-			int dropCount = 0;
-			for (int j = 0; j < w; j++) {
+		for (int c = 0; c < w; c++) {
+			// 떨어뜨릴 위치
+			int rowPointer = h-1;
+			for (int r = h-1; r >=0 ; r--) {
+				if(map[r][c] == 0){
+					continue;
+				}
 
+				if (r == rowPointer){
+					rowPointer--;
+					continue;
+				}
+				int tmp = map[r][c];
+				map[rowPointer--][c] = tmp;
+				map[r][c] = 0;
 			}
-
 		}
 	}
 
@@ -149,15 +148,7 @@ public class Solution_5656_벽돌_깨기 {
 		int y = row;
 		int x = column;
 		removedMap[y][x] = 0;
-
-		System.out.println();
-		for (int i = 0; i < h; i++) {
-			System.out.println(Arrays.toString(removedMap[i]));
-
-		}
-
 		if (removeRange <= 0) return;
-
 
 		for (int k = 0; k < 4; k++) {
 			// 실수: y, x 초기화를 안 했다.
@@ -183,6 +174,7 @@ public class Solution_5656_벽돌_깨기 {
 	}
 
 	private static int countLeftBricks(int w, int h, int[][] map) {
+
 		int result = 0;
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
