@@ -1,3 +1,4 @@
+package 슬라이딩윈도우;
 
 /*
 https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5PzOCKAigDFAUq
