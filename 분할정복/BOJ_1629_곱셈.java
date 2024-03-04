@@ -1,4 +1,4 @@
-package com.company.Algorithm_Java_LeeJE20.분할정복;
+package 분할정복;
 
 /*
 [링크]
