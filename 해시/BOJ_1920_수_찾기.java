@@ -1,4 +1,4 @@
-package base;
+package 해시;
 
 /*
 [링크]
