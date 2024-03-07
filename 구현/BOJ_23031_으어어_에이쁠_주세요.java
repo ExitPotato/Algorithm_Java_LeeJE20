@@ -1,4 +1,4 @@
-package base;
+package 구현;
 
 /*
 [링크]
@@ -45,7 +45,7 @@ dx = {0, 1, -, -1}
 
 
 [검색]
-
+스위치가 있는 부분을 1로 덮으면 안된다..
 
 [다른 사람 코드]
 
@@ -54,6 +54,7 @@ dx = {0, 1, -, -1}
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -119,7 +120,7 @@ play:		for (int i = 0; i < actions.length; ++i) {
 				if(canGoFront(ary, N)) {
 					goFront(ary);
 //					- 스위치가 있다면 map에 스위치 켜기 -> L로 바꾸기 (light)
-					if(map[ary.y][ary.x] == 'S') {
+					if(map[ary.y][ary.x] == 'S' || map[ary.y][ary.x] == 'A') {
 						turnOnSwitch(map, ary.y, ary.x);
 					}
 				}
@@ -134,7 +135,7 @@ play:		for (int i = 0; i < actions.length; ++i) {
 //			System.out.println("ARY: "+ary);
 			for (Person z: zombies) {
 				// 아리가 이동하자마자 좀비랑 만났는지 체크해야한다.
-				if (z.y == ary.y && z.x == ary.x && map[z.y][z.x] != 'L'){
+				if (z.y == ary.y && z.x == ary.x && map[z.y][z.x] != 'L' && map[z.y][z.x] != 'A'){
 					answer = "Aaaaaah!";
 					break play;
 				}
@@ -146,18 +147,16 @@ play:		for (int i = 0; i < actions.length; ++i) {
 					turnDirection(z, 'B');
 				}
 
+				// 음~ 아리가 먼저 행동하기 때문에 여기는 빼야하는건가 -> 다시 넣음
 				// - 좀비 == 아리 && 불 꺼짐 (L이 아님) : 실패
-				if (z.y == ary.y && z.x == ary.x && map[z.y][z.x] != 'L'){
+				if (z.y == ary.y && z.x == ary.x && map[z.y][z.x] != 'L' && map[z.y][z.x] != 'A'){
 					answer = "Aaaaaah!";
 					break play;
 				}
 //				System.out.println("  "+z);
-
 			}
 
-
-
-
+//			printMap(ary, zombies, map);
 		}
 
 
@@ -190,8 +189,8 @@ play:		for (int i = 0; i < actions.length; ++i) {
 
 	public static void turnDirection (Person p, char direction ) {
 		int interval = 0;
-		if (direction == 'L') interval = -1;
-		else if (direction == 'R') interval = 1;
+		if (direction == 'L') interval = 1;
+		else if (direction == 'R') interval = -1;
 		else if (direction == 'B') interval = 2;
 
 		int di = p.di;
@@ -206,15 +205,46 @@ play:		for (int i = 0; i < actions.length; ++i) {
 		return false;
 	}
 	public static void turnOnSwitch (char[][] map, int y, int x) {
+		map[y][x] = 'L';
 		int size = map.length;
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
 				int ny = y + i;
 				int nx = x + j;
 				if (isInMap(ny, nx, size)){
-					map[ny][nx] = 'L';
+					// 다른 스위치라면
+					if (map[ny][nx] == 'S'){
+						map[ny][nx] = 'A'; // 불 켜져 있고 다른 스위치도 있다
+					} else {
+						map[ny][nx] = 'L';
+					}
+
 				}
 			}
 		}
+	}
+
+	public static void printMap (Person ary, List<Person> zombies, char[][] map) {
+		int size = map.length;
+		char[][] copyMap = new char[size][size];
+
+
+		for (int i = 0; i < size; i++) {
+			copyMap[i] = Arrays.copyOf(map[i], size);
+		}
+
+
+
+		copyMap[ary.y][ary.x] = 'Y';
+		for (Person z : zombies) {
+			copyMap[z.y][z.x] = 'M';
+		}
+
+		for (int i = 0; i < size; i++) {
+			System.out.println(Arrays.toString(copyMap[i]));
+		}
+
+		System.out.println("=============================");
+
 	}
 }
