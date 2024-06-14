@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-class Solution {
+class PRG_의상 {
     public int solution(String[][] clothes) {
         Map <String, List<String>> map = new HashMap <> ();
         for (String[] cloth: clothes) {
